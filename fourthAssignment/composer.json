@@ -1,0 +1,16 @@
+{
+    "name": "adam/cinema",
+    "description": "Assignment",
+    "type": "project",
+    "license": "6",
+    "authors": [
+        {
+            "name": "Veres Adam",
+            "email": "veresadam2002@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {"": "src/"}
+    }
+}
