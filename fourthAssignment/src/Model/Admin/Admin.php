@@ -64,4 +64,23 @@ class Admin
             $stmt->execute();
         }
     }
+
+    public static function setScreening($data) {
+        $data = explode(' ', $data);
+        $date = implode(" ", [$data[0],$data[1]]);
+        $conn = new Connection();
+        $pdo = $conn->getConnection();
+        $stmt = $pdo->prepare("SELECT * FROM room WHERE id = {$pdo->quote($data[3])}");
+        $stmt->execute();
+        $roomData = $stmt->fetch();
+        $rows = count(explode('|', $roomData['rows']));
+        $seats = $rows * $roomData['seats_per_row'];
+//        echo "INSERT INTO screening (`date`, `movie_id`, `room_id`, `seats`) VALUES ({$pdo->quote($date)},{$pdo->quote($data[2])},{$pdo->quote($data[3])},{$pdo->quote($seats)})";
+        $stmt = $pdo->prepare("INSERT INTO screening (`date`, `movie_id`, `room_id`, `seats`) VALUES ({$pdo->quote($date)},{$pdo->quote($data[2])},{$pdo->quote($data[3])},{$pdo->quote($seats)})");
+        $stmt->execute();
+
+    }
+
+
+
 }
