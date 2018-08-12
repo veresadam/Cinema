@@ -1,1 +1,8 @@
-action,horror,comedy,thriller,sci-fi,drama,adventure
+id,genre
+1,action
+2,horror
+3,comedy
+4,thriller
+5,sci-fi
+6,drama
+7,adventure

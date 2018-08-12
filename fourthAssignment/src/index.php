@@ -1,7 +1,9 @@
 <?php
- declare(strict_types=1);
 
+declare(strict_types=1);
+require_once "../vendor/autoload.php";
 
-use Model\whatever as whatever;
-
-$asd = new whatever();
+echo var_dump($_SERVER);
+//use Model\whatever as whatever;
+//
+//$asd = new whatever();

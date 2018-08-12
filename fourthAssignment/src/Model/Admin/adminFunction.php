@@ -1,24 +1,35 @@
 <?php
-require_once "../../../vendor/autoload.php";
 
-use Model\Admin\Admin as Admin;
+namespace Model\Admin;
+
+use Model\Connection as Connection;
+
 
 function adminFunction(){
-    $input = getopt('', ['importGenres:', 'importFilms:', 'roomSetup:', 'setScreening:']);
+    $input = getopt('', ['importGenres:', 'importFilms:', 'importRoom:', 'importScreening:']);
 
-    if (isset($input['importGenres'])) {
-        Admin::createGenreTable($input['importGenres']);
+    try {
+        $conn = new Connection();
+        $reader = new Reader();
+        $importer = new Importer($conn, $reader);
+
+        if (isset($input['importGenres'])) {
+            $importer->importGenre($input['importGenres']);
+        }
+        if (isset($input['importFilms'])) {
+            $importer->importMovies($input['importFilms']);
+        }
+        if (isset($input['importRoom'])) {
+            $importer->importRooms($input['roomSetup']);
+        }
+        if (isset($input['importScreening'])) {
+            $importer->setScreening($input['importScreening']);
+        }
+        echo "Admin commands executed properly! :D" . PHP_EOL;
+    } catch (\Exception $exception) {
+        echo "Something went wrong: {$exception->getMessage()}";
     }
-    if (isset($input['importFilms'])) {
-        Admin::createMoviesTable($input['importFilms']);
-    }
-    if (isset($input['roomSetup'])) {
-        Admin::setupRooms($input['roomSetup']);
-    }
-    if (isset($input['setScreening'])) {
-        Admin::setScreening($input['setScreening']);
-    }
-    echo "exit\n";
+
 }
 
 adminFunction();
