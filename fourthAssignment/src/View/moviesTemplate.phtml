@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/i18n/defaults-*.min.js"></script>
+    <title>Movies</title>
+</head>
+<body>
+<nav>
+    <div class="container">
+        <form action="movies" method="post">
+            <b>Filter by :</b>
+                Date of Screening:
+                    <input type="date" name="date">
+                Genre:
+                    <select class="selectpicker" name="genrePicker" id="genrePicker">
+                        <?php foreach ($genres as $genre) : ?>
+                            <option value="<?php echo $genre->getId();?>"><?php echo $genre->getGenre();?></option>
+                        <?php endforeach;?>
+                    </select>
+
+                Year of Production:
+                    <input type="number" name="yrOfProd" min="1970" step="1"/>
+            <input type="submit" value="Filter!" class="btn btn-default">
+            <a href="user/login" class="btn btn-primary">Login/Register</a>
+        </form>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Year of Production</th>
+                <th>Genre</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($movies as $movie) : ?>
+            <tr>
+                <td><img src="<?php echo $movie->getImage();?>" style="height: 150px; width: 125px;"></td>
+                <td><?php echo $movie->getTitle();?></td>
+                <td><?php echo $movie->getYearOfProduction();?></td>
+                <td><?php echo implode(',', $movie->getGenres());?></td>
+                <td><a href="reservation/id/<?php echo $movie->getId();?>" class="btn btn-success btn-lg">Reserve Ticket!</a></td>
+            </tr>
+
+            <?php endforeach;?>
+        </tbody>
+    </table>
+    <div style="text-align: center; size: 20px;">
+        <?php for ($i = 1; $i <= $movies->count()/5 + 1 + ($movies->count() % 5 !== 0) ? 1 : 0; $i++) : ?>
+            <a class="page-link" href="http://cinema.local/movies?page=<?php echo $i;?>"><?php echo $i;?></a>
+        <?php endfor;?>
+    </div>
+
+
+</nav>
+<script>
+
+</script>
+</body>
+</html>

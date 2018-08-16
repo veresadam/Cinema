@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style/style.css">
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.3/css/bootstrap-select.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.9.3/js/bootstrap-select.min.js"></script>
+
+
+    <title>Reservation</title>
+</head>
+<body>
+<div class="container">
+<!--    MOVE TO ANOTHER PAGE FOR SCREENING STUFF-->
+    <div class="seat-counter">Available seats at this movie: <input type="text" value= "<?php echo 'asd';?>" id="seatsCounter" readonly></div>
+<!--    -->
+    <div class="image-size-thingy">
+        <img src="<?php echo $movie->getImage();?>" >
+    </div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Year of Production</th>
+            <th>Genre</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><?php echo $movie->getTitle();?></td>
+            <td><?php echo $movie->getYearOfProduction();?></td>
+            <td><?php echo implode(',',$movie->getGenres())?></td>
+        </tr>
+    </table>
+    <table class="table-pos">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Room</th>
+                <th>Row</th>
+                <th>Seat</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <select class="selectpicker">
+                        <?php foreach ($screenings as $screening) : ?>
+                        <option value="<?php echo 'date'.$screening->id;?>"><?php echo $screening->getDateTime();?></option>
+                        <?php endforeach;?>
+                    </select>
+                </td>
+                <td>
+                    <select class="selectpicker">
+                        <?php foreach ($screenings as $screening) : ?>
+                        <option value="<?php echo $screening->getRoomName();?>"><?php echo $screening->getRoomName();?></option>
+                        <?php endforeach;?>
+                    </select>
+                </td>
+
+<!--                MOVE TO ANOTHER FILE-->
+<!--                CREATE QA QUERY TO FILTER THE SEATS FROM THE TAKEN ONES-->
+<!--                <td>-->
+<!--                    <select class="selectpicker">-->
+<!--                        <option value="row A">A</option>-->
+<!--                        <option value="row B">B</option>-->
+<!--                        <option value="row C">C</option>-->
+<!--                        <option value="row D">D</option>-->
+<!--                        <option value="row E">E</option>-->
+<!--                        <option value="row F">F</option>-->
+<!--                        <option value="row G">G</option>-->
+<!--                        <option value="row H">H</option>-->
+<!--                        <option value="row I">I</option>-->
+<!--                        <option value="row J">J</option>-->
+<!--                    </select>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <select class="selectpicker">-->
+<!--                        <option value="seat 1">1</option>-->
+<!--                        <option value="seat 2">2</option>-->
+<!--                        <option value="seat 3">3</option>-->
+<!--                        <option value="seat 4">4</option>-->
+<!--                        <option value="seat 5">5</option>-->
+<!--                        <option value="seat 6">6</option>-->
+<!--                        <option value="seat 7">7</option>-->
+<!--                        <option value="seat 8">8</option>-->
+<!--                        <option value="seat 9">9</option>-->
+<!--                        <option value="seat 10">10</option>-->
+<!--                    </select>-->
+<!--                </td>-->
+            </tr>
+        </tbody>
+    </table>
+    <button type="button" class="btn btn-secondary btn-lg reserve-btn-pos" style="padding: 20px; font-size: 20px;">Reserve Seat!</button>
+</div>
+</body>
+</html>

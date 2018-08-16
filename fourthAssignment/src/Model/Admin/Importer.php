@@ -21,7 +21,7 @@ class Importer
         foreach ($genreArray as $row) {
             $valueString[] = '('.$this->pdo->quote($row['id']).','.$this->pdo->quote($row['genre']).')';
         }
-        $stmt = $this->pdo->prepare("INSERT INTO  genre (`genre`) VALUES (".implode(',',$valueString).")");
+        $stmt = $this->pdo->prepare("INSERT INTO  genre (`id`, `genre`) VALUES ".implode(',',$valueString));
         $stmt->execute();
     }
 
@@ -32,25 +32,24 @@ class Importer
         foreach ($movieArray as $movie) {
             $valueString[] = '('.$this->pdo->quote($movie['id']).','.$this->pdo->quote($movie['title']).','.$this->pdo->quote($movie['date_of_production'])
                 .','.$this->pdo->quote($movie['image']).')';
-            self::createMovie_GenreTable($movie['genres'], $movie['id']);
         }
-        $stmt = $this->pdo->prepare("INSERT INTO  movie (`id`, `title`, `date_of_production`, `image`) VALUES (".implode(',', $valueString).")");
+        $stmt = $this->pdo->prepare("INSERT INTO  movie (`id`, `title`, `date_of_production`, `image`) VALUES ".implode(',', $valueString).
+            "ON DUPLICATE KEY UPDATE `title` = VALUES(`title`), `date_of_production` = VALUES(`date_of_production`), `image` = VALUES(`image`)");
         $stmt->execute();
-
-
+        self::createMovie_GenreTable($movieArray);
     }
 
-    private function createMovie_GenreTable($movieGenreString, $movieId) {
+    private function createMovie_GenreTable($movieArray) {
 
-        $movieGenres = explode('|', $movieGenreString);
         $valueString = [];
-        foreach ($movieGenres as $genre) {
-            $stmt = $this->pdo->prepare("SELECT `id` FROM `Genre` WHERE `genre`= {$this->pdo->quote($genre)}");
-            $stmt->execute();
-            $genreId = $stmt->fetch();
-            $valueString[] = '('.$this->pdo->quote($movieId).','.$this->pdo->quote($genreId).')';
+        foreach ($movieArray as $movie) {
+            $movieGenres = explode('|', $movie['genres']);
+            foreach ($movieGenres as $genre) {
+                $genreId = "SELECT `id` FROM `genre` WHERE `genre`= {$this->pdo->quote($genre)}";
+                $valueString[] = '('.$this->pdo->quote($movie['id']).',('.$genreId.'))';
+            }
         }
-        $stmt = $this->pdo->prepare("INSERT INTO `movie_genre` (`movie_id`, `genre_id`) VALUES (".implode(',',$valueString).")");
+        $stmt = $this->pdo->prepare("INSERT INTO `movie_genre` (`movie_id`, `genre_id`) VALUES ".implode(',',$valueString));
         $stmt->execute();
     }
 
@@ -60,9 +59,9 @@ class Importer
         $valueString = [];
         foreach ($roomsArray as $roomData) {
             $valueString[] = '('.$this->pdo->quote($roomData['id']).','.$this->pdo->quote($roomData['name']).','.$this->pdo->quote($roomData['rows'])
-                .','.$this->pdo->quote($roomData['seats_per_row']);
+                .','.$this->pdo->quote($roomData['seats_per_row']).')';
         }
-        $stmt = $this->pdo->prepare("INSERT INTO  room (`id`, `name`, `rows`, `seats_per_row`) VALUES (".implode(',', $valueString).")");
+        $stmt = $this->pdo->prepare("INSERT INTO  room (`id`, `name`, `rows`, `seats_per_row`) VALUES ".implode(',', $valueString));
         $stmt->execute();
     }
 
@@ -74,7 +73,7 @@ class Importer
         $roomData = $stmt->fetch();
         $rows = count(explode('|', $roomData['rows']));
         $seats = $rows * $roomData['seats_per_row'];
-        $stmt = $this->pdo->prepare("INSERT INTO screening (`date`, `movie_id`, `room_id`, `seats`) VALUES 
+        $stmt = $this->pdo->prepare("INSERT INTO screening (`date`, `movie_id`, `room_id`, `seats`) VALUES
             ({$this->pdo->quote($date)},{$this->pdo->quote($data[2])},{$this->pdo->quote($data[3])},{$this->pdo->quote($seats)})");
         $stmt->execute();
 

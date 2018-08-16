@@ -1,49 +1,36 @@
 <?php
 
-class Screening
+namespace Model\Entities;
+
+class Screening extends Entity
 {
-    protected $id;
-    protected $date;
+    protected $dateTime;
     protected $hour;
     protected $movie;
 
-    public function __construct($id, $date, $hour, $movie, $theatre)
+    public function __construct($id, $dateTime,Movie $movie, $theatre)
     {
         $this->id = $id;
-        $this->date = $date;
-        $this->hour = $hour;
+        $this->dateTime = $dateTime;
         $this->movie = $movie;
         $this->theatreName = $theatre;
     }
 
+
+//    set
+
     /**
      * @return mixed
      */
-    public function getId()
+    public function getDateTime()
     {
-        return $this->id;
+        return $this->dateTime;
     }
 
     /**
      * @return mixed
      */
-    public function getDate()
-    {
-        return $this->date;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getHour()
-    {
-        return $this->hour;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMovie()
+    public function getMovieData()
     {
         return $this->movie;
     }

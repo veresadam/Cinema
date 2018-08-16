@@ -1,12 +1,13 @@
 <?php
+require_once "../../../vendor/autoload.php";
 
-namespace Model\Admin;
-
+use Model\Admin\Reader as Reader;
 use Model\Connection as Connection;
+use Model\Admin\Importer as Importer;
 
 
 function adminFunction(){
-    $input = getopt('', ['importGenres:', 'importFilms:', 'importRoom:', 'importScreening:']);
+    $input = getopt('', ['importGenres:', 'importMovies:', 'importRooms:', 'importScreening:']);
 
     try {
         $conn = new Connection();
@@ -16,15 +17,16 @@ function adminFunction(){
         if (isset($input['importGenres'])) {
             $importer->importGenre($input['importGenres']);
         }
-        if (isset($input['importFilms'])) {
-            $importer->importMovies($input['importFilms']);
+        if (isset($input['importMovies'])) {
+            $importer->importMovies($input['importMovies']);
         }
-        if (isset($input['importRoom'])) {
-            $importer->importRooms($input['roomSetup']);
+        if (isset($input['importRooms'])) {
+            $importer->importRooms($input['importRooms']);
         }
         if (isset($input['importScreening'])) {
             $importer->setScreening($input['importScreening']);
         }
+
         echo "Admin commands executed properly! :D" . PHP_EOL;
     } catch (\Exception $exception) {
         echo "Something went wrong: {$exception->getMessage()}";

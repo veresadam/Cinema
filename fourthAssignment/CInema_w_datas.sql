@@ -30,6 +30,16 @@ CREATE TABLE `genre` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `genre`
+--
+
+LOCK TABLES `genre` WRITE;
+/*!40000 ALTER TABLE `genre` DISABLE KEYS */;
+INSERT INTO `genre` VALUES (1,'action'),(2,'horror'),(3,'comedy'),(4,'thriller'),(5,'sci-fi'),(6,'drama'),(7,'adventure');
+/*!40000 ALTER TABLE `genre` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `movie`
 --
 
@@ -42,8 +52,18 @@ CREATE TABLE `movie` (
   `date_of_production` int(11) DEFAULT NULL,
   `image` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `movie`
+--
+
+LOCK TABLES `movie` WRITE;
+/*!40000 ALTER TABLE `movie` DISABLE KEYS */;
+INSERT INTO `movie` VALUES (1,'Deadpool',2016,'https://www.imdb.com/title/tt1431045/mediaviewer/rm351021568'),(2,'Deadpool 2',2018,'https://www.imdb.com/title/tt5463162/mediaviewer/rm4291446016'),(3,'The Silence of the Lambs',1991,'https://www.imdb.com/title/tt0102926/mediaviewer/rm3242988544'),(4,'The Lord of the Rings: The Fellowship of the Ring',2001,'https://www.imdb.com/title/tt0120737/mediaviewer/rm3592958976'),(5,'The Lord of the Rings: The Two Towers',2002,'https://www.imdb.com/title/tt0167261/mediaviewer/rm3523884288'),(6,'The Lord of the Rings: The Return of the King',2003,'https://www.imdb.com/title/tt0167260/mediaviewer/rm584928512'),(7,'A Nightmare on Elm Street',2010,'https://www.imdb.com/title/tt1179056/mediaviewer/rm1111920384'),(8,'A Nightmare on Elm Street(1984)',1984,'https://www.imdb.com/title/tt0087800/mediaviewer/rm2867542272');
+/*!40000 ALTER TABLE `movie` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `movie_genre`
@@ -63,6 +83,15 @@ CREATE TABLE `movie_genre` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `movie_genre`
+--
+
+LOCK TABLES `movie_genre` WRITE;
+/*!40000 ALTER TABLE `movie_genre` DISABLE KEYS */;
+/*!40000 ALTER TABLE `movie_genre` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `room`
 --
 
@@ -75,8 +104,17 @@ CREATE TABLE `room` (
   `rows` varchar(255) DEFAULT NULL,
   `seats_per_row` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `room`
+--
+
+LOCK TABLES `room` WRITE;
+/*!40000 ALTER TABLE `room` DISABLE KEYS */;
+/*!40000 ALTER TABLE `room` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `screening`
@@ -96,8 +134,17 @@ CREATE TABLE `screening` (
   KEY `room_id` (`room_id`),
   CONSTRAINT `screening_ibfk_1` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`id`),
   CONSTRAINT `screening_ibfk_2` FOREIGN KEY (`room_id`) REFERENCES `room` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `screening`
+--
+
+LOCK TABLES `screening` WRITE;
+/*!40000 ALTER TABLE `screening` DISABLE KEYS */;
+/*!40000 ALTER TABLE `screening` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `user`
@@ -111,8 +158,18 @@ CREATE TABLE `user` (
   `email` varchar(255) DEFAULT NULL,
   `pwd` char(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'veres_adam2002@yahoo.com','a8f5f167f44f4964e6c998dee827110c'),(2,'veres_adam2002@yahoo.com','a8f5f167f44f4964e6c998dee827110c');
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -123,4 +180,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-12 11:40:18
+-- Dump completed on 2018-08-12 15:46:01
