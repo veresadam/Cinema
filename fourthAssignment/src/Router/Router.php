@@ -52,7 +52,7 @@ class Router
             }
 
             if (is_null($methodName)) {
-                return;
+                return ;
             }
 
             unset($routePieces[0]);

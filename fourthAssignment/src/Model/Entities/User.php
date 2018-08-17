@@ -2,8 +2,6 @@
 
 namespace Model\Entities;
 
-use Model\Connection as Connection;
-
 class User
 {
     protected $email;
@@ -23,7 +21,7 @@ class User
         return $this->email;
     }
 
-    protected function getPwd()
+    public function getPwd()
     {
         return $this->pwd;
     }
